@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JavaFast · Benchmark results</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="js/highcharts.js"></script>
+    <script defer src="js/dashboard.js"></script>
+  </head>
+  <body>
+    <header class="topbar"><a class="brand" href="./index.html"><span class="mark">JF</span><span><b>JavaFast</b><small>BENCHMARKS</small></span></a>
+      <div class="topright"><i></i> Static benchmark report <span id="generated">—</span></div>
+    </header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">PERFORMANCE REPORT</div>
+        <div class="hero-row">
+          <div><h1 id="title">Loading benchmark…</h1>
+            <p id="subtitle">Comparing Java HTTP servers under the same workload.</p></div>
+          <div class="meta">
+            <div><small>GATLING</small><b id="gatling">—</b></div>
+            <div><small>SERVERS</small><b id="count">—</b></div>
+            <div><small>SCHEMA</small><b id="schema">—</b></div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="section-head">
+          <div><small>01 / OVERVIEW</small>
+            <h2>Performance at a glance</h2></div>
+          <span>Global Gatling statistics</span></div>
+        <div id="cards" class="cards">
+          <div class="loading">Loading server results…</div>
+        </div>
+      </section>
+      <section>
+        <div class="section-head">
+          <div><small>02 / THROUGHPUT</small>
+            <h2>Requests per second</h2></div>
+          <div class="tools"><span>Select a server in the legend to show or hide it</span>
+            <button id="reset">Reset zoom</button>
+          </div>
+        </div>
+        <div class="panel chart-panel">
+          <div class="chart-meta">
+            <div><small>Y AXIS</small><b>Requests / second</b></div>
+            <div><small>X AXIS</small><b>Elapsed time</b></div>
+          </div>
+          <div id="chart">
+            <div class="loading">Preparing chart…</div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="section-head">
+          <div><small>03 / MEMORY USAGE</small>
+            <h2>Heap usage</h2></div>
+          <div class="tools"><span>Select a server in the legend to show or hide it</span>
+            <button id="reset2">Reset zoom</button>
+          </div>
+        </div>
+        <div class="panel chart-panel">
+          <div class="chart-meta">
+            <div><small>Y AXIS</small><b>Used heap (MB)</b></div>
+            <div><small>X AXIS</small><b>Elapsed time</b></div>
+          </div>
+          <div id="chart2">
+            <div class="loading">Preparing chart…</div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="section-head">
+          <div><small>04 / COMPARISON</small>
+            <h2>Server comparison</h2></div>
+          <span>Higher throughput and lower latency are better</span></div>
+        <div class="panel scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>SERVER</th>
+                <th>MEAN RPS</th>
+                <th>MEAN</th>
+                <th>P50</th>
+                <th>P95</th>
+                <th>P99</th>
+                <th>MAX</th>
+                <th>SUCCESS</th>
+                <th>REQUESTS</th>
+                <th>GC COUNT</th>
+                <th>GC TIME</th>
+                <th>MAX HEAP</th>
+                <th>AVG HEAP</th>
+              </tr>
+            </thead>
+            <tbody id="comparison">
+              <tr>
+                <td colspan="13">Loading…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <div class="section-head">
+          <div><small>05 / DETAILS</small>
+            <h2>Gatling report details</h2></div>
+          <span>Select a server to inspect its statistics</span></div>
+        <div class="panel">
+          <div id="tabs" class="tabs"></div>
+          <div id="detail" class="detail">
+            <div class="loading">Loading details…</div>
+          </div>
+        </div>
+      </section>
+      <section class="environment">
+        <div class="section-head">
+          <div>
+            <small>06 / ENVIRONMENT</small>
+            <h2>Test environment</h2>
+          </div>
+          <span>System configuration and runtime parameters</span>
+        </div>
+        <div class="panel environment-panel">
+          <div class="environment-grid">
+            <div class="environment-group">
+              <div class="environment-title">
+                <span class="environment-icon">01</span>
+                <b>Hardware</b>
+              </div>
+              <dl>
+                <div><dt>CPU</dt><dd>AMD Ryzen 9 7950X</dd></div>
+                <div><dt>Cores / Threads</dt><dd>8 / 16</dd></div>
+                <div><dt>Memory</dt><dd>8 GB DDR5</dd></div>
+                <div><dt>Operating system</dt><dd>Linux x86_64</dd></div>
+              </dl>
+            </div>
+
+            <div class="environment-group">
+              <div class="environment-title">
+                <span class="environment-icon">02</span>
+                <b>Java runtime</b>
+              </div>
+              <dl>
+                <div><dt>JDK</dt><dd>OpenJDK 25</dd></div>
+                <div><dt>JVM</dt><dd>HotSpot 64-Bit</dd></div>
+                <div><dt>GC</dt><dd>G1GC</dd></div>
+                <div><dt>Heap</dt><dd>512 MB – 512 MB</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="environment-note">
+            <span>i</span>
+            All servers were tested on the same hardware under equivalent runtime and workload conditions.
+          </div>
+        </div>
+      </section>
+      <footer>
+        <b>JavaFast</b>
+        <p>Results depend on workload, hardware and configuration. Run conditions kept equivalent for meaningful comparisons.</p>
+        <code id="footer-simulation"></code>
+      </footer>
+    </main>
+    <div id="error" class="error" hidden><h2>Could not load benchmark data</h2>
+      <p id="error-message"></p><code id="error-path"></code></div>
+  </body>
+</html>

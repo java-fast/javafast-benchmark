@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+}
+
+def version = providers.gradleProperty('version').orElse('5.2.2').get()
+dependencies {
+    implementation "io.vertx:vertx-core:${version}"
+    implementation project(':utils')
+}
+
+application {
+    mainClass = 'io.javafast.benchmark.vertx.VertxServer'
+}
+
+tasks.named('jar') {
+    archiveFileName = 'vertx-all.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+    from {
+        configurations.runtimeClasspath.collect { dependency ->
+            dependency.isDirectory() ? dependency : zipTree(dependency)
+        }
+    }
+}

@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+}
+
+def version = providers.gradleProperty('version').orElse('1.0.0-SNAPSHOT').get()
+dependencies {
+    implementation "io.javafast:javafast:${version}"
+    implementation project(':utils')
+}
+
+application {
+    mainClass = 'io.javafast.benchmark.javafast.JavaFastServer'
+}
+
+tasks.named('jar') {
+    archiveFileName = 'javafast-all.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+    from {
+        configurations.runtimeClasspath.collect { dependency ->
+            dependency.isDirectory() ? dependency : zipTree(dependency)
+        }
+    }
+}

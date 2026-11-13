@@ -1,0 +1,23 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+group = 'io.javafast.benchmark'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jsoup:jsoup:1.23.2'
+}
+
+gradlePlugin {
+    plugins {
+        benchmarkReport {
+            id = 'io.javafast.benchmark.report'
+            implementationClass = 'io.javafast.benchmark.report.BenchmarkReportPlugin'
+        }
+    }
+}
