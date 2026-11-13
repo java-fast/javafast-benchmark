@@ -6,6 +6,7 @@ version="${1:-5.2.2}"
 
 host="127.0.0.1"
 port="8080"
+threads="8"
 
 jvmArgs=(
   "-Xms512m"
@@ -17,6 +18,7 @@ jvmArgs=(
 systemProperties=(
   "-Dserver.host=${host}"
   "-Dserver.port=${port}"
+  "-Dvertx.eventloop.threads=${threads}"
 )
 
 scriptDir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
