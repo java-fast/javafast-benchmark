@@ -42,10 +42,8 @@ public final class VertxServer {
     }
 
     static void main() {
-        final int threads = Integer.parseInt(System.getProperty("vertx.eventloop.threads", Runtime.getRuntime().availableProcessors() + ""));
-        final VertxOptions options = new VertxOptions().setEventLoopPoolSize(threads);
-        final Vertx vertx = Vertx.vertx(options);
-        vertx.deployVerticle(HttpServerVerticle::new, new DeploymentOptions().setInstances(threads))
+        final Vertx vertx = Vertx.vertx();
+        vertx.deployVerticle(HttpServerVerticle::new, new DeploymentOptions().setInstances(VertxOptions.DEFAULT_EVENT_LOOP_POOL_SIZE))
             .onSuccess(_ -> IO.println("Vert.x server deployed"))
             .onFailure(Throwable::printStackTrace);
 

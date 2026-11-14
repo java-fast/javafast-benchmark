@@ -10,6 +10,8 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class HelloWorldSimulation extends Simulation {
 
+    private static final int CONCURRENCY = BenchmarkConfig.MAX_CONCURRENT_USERS;
+
     private final HttpProtocolBuilder httpProtocol = http
         .baseUrl(BenchmarkConfig.BASE_URL)
         .acceptHeader("text/plain")
@@ -29,8 +31,8 @@ public class HelloWorldSimulation extends Simulation {
     {
         setUp(
             helloWorld.injectClosed(
-                rampConcurrentUsers(1).to(5_000).during(60),
-                constantConcurrentUsers(5_000).during(30)
+                rampConcurrentUsers(1).to(CONCURRENCY).during(60),
+                constantConcurrentUsers(CONCURRENCY).during(30)
             )
         ).protocols(httpProtocol)
             .assertions(global().failedRequests().count().is(0L));

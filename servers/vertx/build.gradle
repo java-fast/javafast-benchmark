@@ -2,7 +2,7 @@ plugins {
     id 'application'
 }
 
-def version = providers.gradleProperty('version').orElse('5.2.2').get()
+def version = providers.gradleProperty('version').orElse('5.2.3').get()
 dependencies {
     implementation "io.vertx:vertx-core:${version}"
     implementation project(':utils')
