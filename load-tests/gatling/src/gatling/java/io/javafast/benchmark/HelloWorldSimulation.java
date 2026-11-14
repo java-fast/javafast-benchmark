@@ -29,8 +29,8 @@ public class HelloWorldSimulation extends Simulation {
     {
         setUp(
             helloWorld.injectClosed(
-                rampConcurrentUsers(1).to(4_000).during(60),
-                constantConcurrentUsers(4_000).during(30)
+                rampConcurrentUsers(1).to(5_000).during(60),
+                constantConcurrentUsers(5_000).during(30)
             )
         ).protocols(httpProtocol)
             .assertions(global().failedRequests().count().is(0L));
