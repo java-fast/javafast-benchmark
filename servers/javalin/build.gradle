@@ -1,0 +1,27 @@
+plugins {
+    id 'application'
+}
+
+def version = providers.gradleProperty('version').orElse('7.2.4').get()
+dependencies {
+    implementation "io.javalin:javalin:${version}"
+    implementation 'org.slf4j:slf4j-simple:2.0.18'
+    implementation project(':utils')
+}
+
+application {
+    mainClass = 'io.javafast.benchmark.javalin.JavalinServer'
+}
+
+tasks.named('jar') {
+    archiveFileName = 'javalin-all.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+    from {
+        configurations.runtimeClasspath.collect { dependency ->
+            dependency.isDirectory() ? dependency : zipTree(dependency)
+        }
+    }
+}

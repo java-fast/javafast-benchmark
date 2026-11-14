@@ -17,13 +17,14 @@ public final class JavaFastServer {
     static void main() {
         final String host = System.getProperty("server.host", "localhost");
         final int port = Integer.parseInt(System.getProperty("server.port", "8080"));
-        JavaFast.create(cfg -> {
+        final JavaFast app = JavaFast.create(cfg -> {
             cfg.routes.get("/hello", ctx -> {
                 ctx.header("content-type", "text/plain; charset=utf-8")
                     .result("Hello World");
             });
         }).start(host, port);
 
+        Runtime.getRuntime().addShutdownHook(new Thread(app::stop));
         HeapUsageMonitor.start("servers/javafast/build/results/heap-usage.json");
     }
 

@@ -6,10 +6,7 @@
 /reporting/.gradle/
 /reporting/build/
 /reporting/build/classes/groovy/main/
-/servers/javafast/build/
-/servers/javafast/build/classes/java/main/
-/servers/vertx/build/
-/servers/vertx/build/classes/java/main/
 /utils/build/
 /utils/build/classes/java/main/
+/servers/**/build/
 /.idea/

@@ -6,5 +6,6 @@ rootProject.name = 'javafast-benchmark'
 
 include 'servers:javafast'
 include 'servers:vertx'
+include 'servers:javalin'
 include 'load-tests:gatling'
 include 'utils'

@@ -71,7 +71,7 @@ function drawChart2(list){
  Highcharts.setOptions({lang:{thousandsSep:","},credits:{enabled:false}});
  chart2=Highcharts.chart("chart2",{chart:{type:"line",backgroundColor:"#ffffff",zooming:{type:"x"},spacing:[12,8,10,8],animation:false,style:{fontFamily:"Inter, sans-serif"}},
  title:{text:null},xAxis:{min:0,title:{text:"Elapsed time (seconds)"},gridLineWidth:0,lineColor:"#e5ebe7",labels:{style:{color:"#87938c"}}},
- yAxis:{min:0,title:{text:"Used heap (MB)"},gridLineColor:"#edf1ee",gridLineDashStyle:"ShortDash",labels:{formatter(){return n(this.value);}}},
+ yAxis:{min:0,title:{text:"Used heap (MB)"},gridLineColor:"#edf1ee",gridLineDashStyle:"ShortDash",labels:{formatter(){return n(this.value);}},plotLines:[{value:512,color:"#c45b68",dashStyle:"ShortDash",width:2,zIndex:5,label:{text:"Max heap · 512 MB",align:"right",x:-8,style:{color:"#c45b68",fontWeight:"600"}}}]},
  legend:{align:"left",verticalAlign:"bottom",itemStyle:{fontSize:"11px",fontWeight:"600",color:"#526159"},symbolRadius:0,itemHoverStyle:{color:"#147d58"}},
  tooltip:{shared:false,headerFormat:'<span style="color:#74817a">Elapsed {point.x:.1f}s</span><br>',pointFormatter:function(){return `<span style="color:${this.color}">●</span> <b>${this.series.name}</b><br><b>${n(this.y,2)}</b> MB`; }},
  plotOptions:{series:{animation:false,marker:{enabled:false,states:{hover:{enabled:true,radius:4}}},lineWidth:2.5,states:{inactive:{opacity:.2}}}},
