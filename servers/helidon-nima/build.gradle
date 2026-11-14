@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+}
+
+def version = providers.gradleProperty('version').orElse('4.5.6').get()
+dependencies {
+    implementation "io.helidon.webserver:helidon-webserver:${version}"
+    implementation project(':utils')
+}
+
+application {
+    mainClass = 'io.javafast.benchmark.helidon.nima.HelidonNimaServer'
+}
+
+tasks.named('jar') {
+    archiveFileName = 'helidon-nima-all.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+    from {
+        configurations.runtimeClasspath.collect { dependency ->
+            dependency.isDirectory() ? dependency : zipTree(dependency)
+        }
+    }
+}

@@ -19,7 +19,7 @@ function header(list){
  $("generated").textContent=data.generatedAt||"—"; $("footer-simulation").textContent=data.simulation||simulation;
 }
 function cards(list){
- $("cards").innerHTML=list.map(s=>`<article class="card ${s.id===selected?"selected":""}" data-id="${esc(s.id)}" style="--c:${s.color}" tabindex="0">
+ $("cards").innerHTML=list.slice().sort((a,b)=>{const aRps=Number(a.metrics?.meanRps),bRps=Number(b.metrics?.meanRps);return (Number.isFinite(bRps)?bRps:-Infinity)-(Number.isFinite(aRps)?aRps:-Infinity)}).map(s=>`<article class="card ${s.id===selected?"selected":""}" data-id="${esc(s.id)}" style="--c:${s.color}" tabindex="0">
  <div class="card-top"><span class="card-name">${esc(s.name||s.id)}</span><span class="version">${esc(s.gatling?.version||s.id)}</span></div>
  <div class="rps">${n(s.metrics?.meanRps)}</div><div class="muted">mean requests / second</div>
  <div class="card-bottom"><span>p99 <b>${ms(s.metrics?.p99)}</b></span><span>success <b>${rate(s.metrics||{})}</b></span></div></article>`).join("");
@@ -59,7 +59,7 @@ function drawChart(list){
      return false;
     }
    }}},
- series:list.flatMap(s=>[
+ series:list.slice().sort((a,b)=>{const aRps=Number(a.metrics?.meanRps),bRps=Number(b.metrics?.meanRps);return (Number.isFinite(bRps)?bRps:-Infinity)-(Number.isFinite(aRps)?aRps:-Infinity)}).flatMap(s=>[
    {name:s.name||s.id, serverId: s.id, sType:'throughput', color:s.color,yAxis:0,data:(s.throughput||[]).map(p=>[Number(p[0]),Number(p[1])])},
    {name:`${s.name||s.id} · Users`, serverId: s.id, sType:'concurrency', color:s.color,dashStyle:"ShortDash",yAxis:1,showInLegend:false,data:(s.concurrency||[]).map(p=>[Number(p[0]),Number(p[1])])}
  ]),
@@ -75,7 +75,7 @@ function drawChart2(list){
  legend:{align:"left",verticalAlign:"bottom",itemStyle:{fontSize:"11px",fontWeight:"600",color:"#526159"},symbolRadius:0,itemHoverStyle:{color:"#147d58"}},
  tooltip:{shared:false,headerFormat:'<span style="color:#74817a">Elapsed {point.x:.1f}s</span><br>',pointFormatter:function(){return `<span style="color:${this.color}">●</span> <b>${this.series.name}</b><br><b>${n(this.y,2)}</b> MB`; }},
  plotOptions:{series:{animation:false,marker:{enabled:false,states:{hover:{enabled:true,radius:4}}},lineWidth:2.5,states:{inactive:{opacity:.2}}}},
- series:list.map(s=>({name:s.name||s.id,serverId:s.id,color:s.color,sType:"heapUsage",data:(s.heapUsage||[]).map(p=>[Number(p[0]),Number(p[1])/(1024*1024)])})),
+ series:list.slice().sort((a,b)=>{const aRps=Number(a.metrics?.meanRps),bRps=Number(b.metrics?.meanRps);return (Number.isFinite(bRps)?bRps:-Infinity)-(Number.isFinite(aRps)?aRps:-Infinity)}).map(s=>({name:s.name||s.id,serverId:s.id,color:s.color,sType:"heapUsage",data:(s.heapUsage||[]).map(p=>[Number(p[0]),Number(p[1])/(1024*1024)])})),
  responsive:{rules:[{condition:{maxWidth:600},chartOptions:{legend:{itemStyle:{fontSize:"10px"}}}}]}});
  $("reset2").onclick=()=>chart2&&chart2.zoomOut();
 }
@@ -106,7 +106,7 @@ function detail(s){
  ${req.map(([id,r])=>`<tr><td>${esc(r.name||id)}</td><td>${compact(r.total)}</td><td>${compact(r.ok)}</td><td>${compact(r.ko)}</td><td>${ms(r.mean)}</td><td>${ms(r.p50)}</td><td>${ms(r.p95)}</td><td>${ms(r.p99)}</td></tr>`).join("")||'<tr><td colspan="8">No request-level statistics available.</td></tr>'}
  </tbody></table></div>`;
 }
-function tabs(list){$("tabs").innerHTML=list.map(s=>`<button class="tab" role="tab" data-id="${esc(s.id)}" aria-selected="${s.id===selected}">${esc(s.name||s.id)}</button>`).join("");document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>select(t.dataset.id));}
+function tabs(list){$("tabs").innerHTML=list.slice().sort((a,b)=>{const aRps=Number(a.metrics?.meanRps),bRps=Number(b.metrics?.meanRps);return (Number.isFinite(bRps)?bRps:-Infinity)-(Number.isFinite(aRps)?aRps:-Infinity)}).map(s=>`<button class="tab" role="tab" data-id="${esc(s.id)}" aria-selected="${s.id===selected}">${esc(s.name||s.id)}</button>`).join("");document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>select(t.dataset.id));}
 function select(id){selected=id;const list=servers(),s=list.find(x=>x.id===id);if(!s)return;cards(list);tabs(list);detail(s);}
 function toggleServer(el){
   const id = el.dataset.id;
