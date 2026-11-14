@@ -26,7 +26,7 @@ function cards(list){
  document.querySelectorAll(".card").forEach(el=>{const f=()=>toggleServer(el);el.onclick=f;el.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();f();}}});
 }
 function comparison(list){
- $("comparison").innerHTML=list.map(s=>{const m=s.metrics||{}, samples=s.heapUsage||[], last=samples[samples.length-1]||[], heaps=samples.map(p=>Number(p[1])).filter(Number.isFinite), maxHeap=heaps.length?Math.max(...heaps):null, avgHeap=heaps.length?heaps.reduce((sum,value)=>sum+value,0)/heaps.length:null;return `<tr><td><span class="dot" style="--c:${s.color}"></span><span class="server-name">${esc(s.name||s.id)}</span></td>
+ $("comparison").innerHTML=list.slice().sort((a,b)=>{const aRps=Number(a.metrics?.meanRps),bRps=Number(b.metrics?.meanRps);return (Number.isFinite(bRps)?bRps:-Infinity)-(Number.isFinite(aRps)?aRps:-Infinity)}).map(s=>{const m=s.metrics||{}, samples=s.heapUsage||[], last=samples[samples.length-1]||[], heaps=samples.map(p=>Number(p[1])).filter(Number.isFinite), maxHeap=heaps.length?Math.max(...heaps):null, avgHeap=heaps.length?heaps.reduce((sum,value)=>sum+value,0)/heaps.length:null;return `<tr data-server-id="${esc(s.id)}"><td><span class="dot" style="--c:${s.color}"></span><span class="server-name">${esc(s.name||s.id)}</span></td>
  <td>${n(m.meanRps)}</td><td>${ms(m.mean)}</td><td>${ms(m.p50)}</td><td>${ms(m.p95)}</td><td>${ms(m.p99)}</td><td>${ms(m.max)}</td><td><span class="success">${rate(m)}</span></td><td>${compact(m.total)}</td><td>${compact(last[2])}</td><td>${ms(last[3])}</td><td>${maxHeap==null?"—":`${n(maxHeap/(1024*1024),2)} MB`}</td><td>${avgHeap==null?"—":`${n(avgHeap/(1024*1024),2)} MB`}</td></tr>`}).join("");
 }
 function drawChart(list){
@@ -113,14 +113,20 @@ function toggleServer(el){
   const selected = el.classList.contains("selected");
   if (!selected) {
     select(id)
-    document.querySelector(`.card:not([data-id="${id}"])`).classList.add("disabled") // disable all others
+    document.querySelectorAll("#comparison tr")
+        .forEach(row=>row.classList.toggle("selected-row", row.dataset.serverId===id)); // select table row
+    document.querySelectorAll(`.card:not([data-id="${id}"])`)
+        .forEach(row => row.classList.add("disabled")) // disable all others
     chart.series.forEach(s=>s.setVisible(false, false)); // hide all
     chart2.series.forEach(s=>s.setVisible(false, false));
     const group= chart.series.filter(s=> s.options.serverId===id);
     group.forEach(s=>s.setVisible(true, false)); // select server
     chart2.series.filter(s=>s.options.serverId===id).forEach(s=>s.setVisible(true, false));
   } else {
-    document.querySelector(`.card:not([data-id="${id}"])`).classList.remove("disabled") // enable all others
+    document.querySelectorAll("#comparison tr")
+        .forEach(row=>row.classList.remove("selected-row")); // deselect table rows
+    document.querySelectorAll(`.card:not([data-id="${id}"])`)
+        .forEach(row => row.classList.remove("disabled")) // enable all others
     el.classList.remove("selected") // deselect
     chart.series.forEach(s=>s.setVisible(true, false)); // show all
     chart2.series.forEach(s=>s.setVisible(true, false));
