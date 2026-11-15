@@ -7,7 +7,7 @@
             "name": "Helidon Nima",
             "environment": {
                 "executionModel": {
-                    "I/O model": "Virtual Threads",
+                    "I/O model": "Non-blocking",
                     "I/O threads": "10 (ForkJoinPool)",
                     "Request execution": "Virtual Thread per Connection",
                     "Protocol": "HTTP/1.1"
@@ -5972,7 +5972,7 @@
             "environment": {
                 "executionModel": {
                     "I/O model": "Non-blocking",
-                    "I/O threads": "10",
+                    "I/O threads": "10 (CPU cores)",
                     "Request execution": "Virtual threads",
                     "Protocol": "HTTP/1.1"
                 }
@@ -23474,7 +23474,7 @@
             "environment": {
                 "executionModel": {
                     "I/O model": "Non-blocking",
-                    "I/O threads": "10 (Core size)",
+                    "I/O threads": "10 (CPU cores)",
                     "Request execution": "XNIO Worker Threads",
                     "Protocol": "HTTP/1.1"
                 }
@@ -29346,7 +29346,7 @@
             "environment": {
                 "executionModel": {
                     "I/O model": "Event loop",
-                    "I/O threads": "CPU cores",
+                    "I/O threads": "20 (2 * CPU cores)",
                     "Request execution": "Platform threads",
                     "Protocol": "HTTP/1.1"
                 }

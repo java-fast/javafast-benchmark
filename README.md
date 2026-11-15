@@ -4,7 +4,7 @@ A Gradle multi-project for comparing JavaFast and some other popular frameworks 
 
 ## Benchmarks
 
-[HelloWorldSimulation](./benchmark-results/dashboard/index.html?simulation=HelloWorldSimulation)
+[HelloWorldSimulation](https://java-fast.github.io/javafast-benchmark/?simulation=HelloWorldSimulation)
 
 Although a simple "Hello World" benchmark doesn't show the real world performance of a framework, it's a good starting point for comparing different frameworks. And the first results of JavaFast look promising, on the test machine achieving around **200K requests per second** under the load of **4K concurrent users**, beating most of the popular frameworks in the Java ecosystem.
 
