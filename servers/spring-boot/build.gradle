@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+}
+
+def version = providers.gradleProperty('version').orElse('4.1.2').get()
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:${version}"
+    implementation project(':utils')
+}
+
+application {
+    mainClass = 'io.javafast.benchmark.springboot.SpringBootServer'
+}
+
+tasks.named('jar') {
+    archiveFileName = 'spring-boot-all.jar'
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+    from {
+        configurations.runtimeClasspath.collect { dependency ->
+            dependency.isDirectory() ? dependency : zipTree(dependency)
+        }
+    }
+}

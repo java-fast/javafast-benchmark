@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+}
+
+def version = providers.gradleProperty('version').orElse('2.4.4.Final').get()
+dependencies {
+    implementation "io.undertow:undertow-core:${version}"
+    implementation project(':utils')
+}
+
+application {
+    mainClass = 'io.javafast.benchmark.undertow.UndertowServer'
+}
+
+tasks.named('jar') {
+    archiveFileName = 'undertow-all.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+    from {
+        configurations.runtimeClasspath.collect { dependency ->
+            dependency.isDirectory() ? dependency : zipTree(dependency)
+        }
+    }
+}
