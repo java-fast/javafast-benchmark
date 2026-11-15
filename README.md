@@ -52,6 +52,16 @@ Each simulation run produces a report directory. Avoid running multiple Gatling 
 
 Although a simple "Hello World" benchmark doesn't show the real world performance of a framework, it's a good starting point for comparing different frameworks. And the first results of JavaFast look promising, on the test machine achieving around **200K requests per second** under the load of **4K concurrent users**, beating most of the popular frameworks in the Java ecosystem.
 
+### Quick Glance
+
+In this benchmark, JavaFast ranks first across three key performance dimensions:
+
+- **Throughput:** ~199K requests/sec, slightly ahead of Undertow and Vert.x. Throughput is relatively close across the top-performing frameworks.
+- **Tail Latency:** Best P95 (22 ms) and P99 (24 ms) response times among the tested frameworks.
+- **Memory Efficiency:** JavaFast's most significant advantage. It achieves the lowest average heap usage (155 MB) and only 41 ms of total GC time, compared to 232–245 ms for Undertow and Vert.x, and substantially more for the other frameworks.
+
+While throughput differences between the leading frameworks are relatively small, JavaFast's memory efficiency stands out. Its minimal allocation overhead translates into significantly less garbage collection activity and a smaller memory footprint.
+
 ### How to Interpret Benchmark Results
 
 Benchmark results should be considered a reference point rather than an absolute ranking of HTTP server frameworks.
