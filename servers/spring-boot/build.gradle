@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'org.springframework.boot' version '4.1.2'
 }
 
 def version = providers.gradleProperty('version').orElse('4.1.2').get()
@@ -12,15 +13,6 @@ application {
     mainClass = 'io.javafast.benchmark.springboot.SpringBootServer'
 }
 
-tasks.named('jar') {
+tasks.named('bootJar') {
     archiveFileName = 'spring-boot-all.jar'
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-    manifest {
-        attributes 'Main-Class': application.mainClass.get()
-    }
-    from {
-        configurations.runtimeClasspath.collect { dependency ->
-            dependency.isDirectory() ? dependency : zipTree(dependency)
-        }
-    }
 }

@@ -22,7 +22,7 @@ systemProperties=(
 scriptDir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd "$scriptDir"
 
-./gradlew :servers:spring-boot:clean :servers:spring-boot:jar -Pversion="$version"
+./gradlew :servers:spring-boot:clean :servers:spring-boot:bootJar -Pversion="$version"
 
 echo "Running Spring Boot $version on:"
 java --version
