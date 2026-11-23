@@ -24,6 +24,7 @@ Benchmark results should be considered a reference point rather than an absolute
 
 A few things are worth keeping in mind when interpreting the results:
 
+- **Default configurations:** No framework-specific performance tuning has been applied. Each framework uses its default configuration, without custom optimizations or manual tuning.
 - **Throughput (RPS):** Represents the number of requests successfully processed per second. Higher throughput indicates greater request-processing capacity under the tested workload.
 - **Response time percentiles:** Mean response time alone does not tell the whole story. P50 represents the median response time, while P95 and P99 show how the system behaves for slower requests. These percentiles are particularly useful for understanding latency consistency under load.
 - **Concurrent users:** The benchmark uses up to 4,096 concurrent users to generate a sustained load. This does not necessarily mean that 4,096 requests are being processed simultaneously.
